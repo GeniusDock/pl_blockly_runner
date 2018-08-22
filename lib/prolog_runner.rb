@@ -8,6 +8,9 @@ Mumukit.configure do |config|
   config.content_type = 'markdown'
 end
 
+
+require_relative 'prolog'
+require_relative 'assets_server'
 require_relative 'version'
 require_relative 'test_hook'
 require_relative 'query_hook'
