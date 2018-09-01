@@ -254,10 +254,18 @@
 <dom-module id="kids-reset-button">
   <template>
     <div>
-      <paper-fab id="gbsResetButton"
-                 icon="av:replay"
-                 on-click="_onButtonClick"
-      ></paper-fab>
+        <div class="style-scope kids-reset-button">
+            <paper-fab id="gbsResetButton" icon="av:replay" class="style-scope kids-reset-button x-scope paper-fab-0" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1">
+              <iron-icon id="icon" class="style-scope paper-fab x-scope iron-icon-0">
+                <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                  <g class="style-scope iron-icon">
+                    <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" class="style-scope iron-icon">
+                    </path>
+                  </g>
+                </svg>
+
+            </iron-icon><span class="style-scope paper-fab" hidden=""> </span></paper-fab>
+        </div>
     </div>
   </template>
 
@@ -302,8 +310,29 @@
 
   <template>
     <div style="position: relative">
-      <button id="runner" class$="{{_getSubmitCss(isWaiting)}}"></button>
-      <waiting-spinner class$="spinner {{_getSpinnerCss(isWaiting)}}"></waiting-spinner>
+      <div style="position: relative" class="style-scope kids-submit-button">
+        <gobstones-code-runner id="runner" class="visible style-scope kids-submit-button">
+
+
+          <div class="style-scope gobstones-code-runner">
+            <paper-fab id="gbsPlayButton" icon="av:play-arrow" class="x-scope paper-fab-0" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1">
+              <iron-icon id="icon" class="style-scope paper-fab x-scope iron-icon-0"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                <g class="style-scope iron-icon">
+                  <path d="M8 5v14l11-7z" class="style-scope iron-icon">
+                  </path>
+                </g>
+              </svg>
+
+            </iron-icon><span class="style-scope paper-fab" hidden=""> </span></paper-fab>
+          </div>
+        </gobstones-code-runner>
+        <waiting-spinner class="spinner hidden style-scope kids-submit-button">
+          <div class="spinner style-scope waiting-spinner">
+            <div class="double-bounce1 style-scope waiting-spinner"></div>
+            <div class="double-bounce2 style-scope waiting-spinner"></div>
+          </div>
+        </waiting-spinner>
+      </div>
     </div>
   </template>
 
