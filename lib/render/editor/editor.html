@@ -142,11 +142,7 @@
       getStudentCode: function () {
         return this
           .getBlockly()
-          .generateCode({withRegions: true, clearErrors: false});
-      },
-
-      getStudentXml: function () {
-        return $("#mu-custom-editor-value")[0].value || "";
+          .generateCode();
       },
 
       getTeacherCode: function () {
@@ -254,10 +250,21 @@
 <dom-module id="kids-reset-button">
   <template>
     <div>
-      <paper-fab id="gbsResetButton"
-                 icon="av:replay"
-                 on-click="_onButtonClick"
-      ></paper-fab>
+        <div  class="style-scope kids-reset-button">
+            <paper-fab id="plResetButton" on-tap="_onButtonClick"  icon="av:replay" class="style-scope kids-reset-button x-scope paper-fab-0" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1">
+              <iron-icon id="icon" class="style-scope paper-fab x-scope iron-icon-0">
+                <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                  <g class="style-scope iron-icon">
+                    <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" class="style-scope iron-icon">
+                    </path>
+                  </g>
+                </svg>
+
+              </iron-icon>
+              <span class="style-scope paper-fab" hidden="">
+              </span>
+            </paper-fab>
+        </div>
     </div>
   </template>
 
@@ -267,16 +274,14 @@
 
       _onButtonClick: function () {
         const blockly = this._getBlockly();
-        blockly.workspaceXml = blockly.initialXml;
-        blockly.scrollToBlock();
+        blockly.workspace.clear();
       },
-
       _getBlockly: function () {
-        return this._getEditor().getBlockly();
+          return this._getEditor().getBlockly();
       },
 
       _getEditor: function () {
-        return $("mu-prolog-custom-editor")[0];
+          return $("mu-prolog-custom-editor")[0];
       }
     });
   </script>
@@ -302,160 +307,84 @@
 
   <template>
     <div style="position: relative">
-      <button id="runner" class$="{{_getSubmitCss(isWaiting)}}"></button>
-      <waiting-spinner class$="spinner {{_getSpinnerCss(isWaiting)}}"></waiting-spinner>
+      <div style="position: relative" class="style-scope kids-submit-button">
+        <prolog-code-runner id="runner" class="visible style-scope kids-submit-button">
+
+
+          <div class="style-scope">
+            <paper-fab on-tap="_onButtonClick" id="plPlayButton" icon="av:play-arrow" class="x-scope paper-fab-0" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1">
+              <iron-icon id="icon" class="style-scope paper-fab x-scope iron-icon-0"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                <g class="style-scope iron-icon">
+                  <path d="M8 5v14l11-7z" class="style-scope iron-icon">
+                  </path>
+                </g>
+              </svg>
+
+            </iron-icon><span class="style-scope paper-fab" hidden=""> </span></paper-fab>
+          </div>
+        </prolog-code-runner>
+        <waiting-spinner class="spinner hidden style-scope kids-submit-button">
+          <div class="spinner style-scope waiting-spinner">
+            <div class="double-bounce1 style-scope waiting-spinner"></div>
+            <div class="double-bounce2 style-scope waiting-spinner"></div>
+          </div>
+        </waiting-spinner>
+      </div>
     </div>
   </template>
 
+
   <script>
-    Polymer({
-      is: "kids-submit-button",
-      listeners: {
-        "gbs-run-request": "_onRunRequest",
-        "gbs-stop": "_onStop",
-        "gbs-reset-state": "_onResetState"
-      },
-      properties: {
-        serverPromise: Object,
-        serverResponse: Object,
-        isWaiting: {
-          type: Boolean,
-          value: false
-        }
-      },
-
-      ready: function () {
-
-        const resetStatusAfterAborted = () => {
-          $('#kids-results-aborted').on('hidden.bs.modal', () => {
-            this.$.runner.isDirty = false;
-            this._onResetState();
-          })
-        };
-        resetStatusAfterAborted();
-      },
-
-      _onRunRequest: function (event) {
-        const {detail: controller} = event;
-
-        const editor = this._getEditor();
-        const xml = editor.getStudentXml();
-        const code = editor.getStudentCode();
-        const teacherCode = editor.getTeacherCode() || "";
-        const solution = {content: xml};
-        const executionSpeed = 2;
-
-        this._cleanState();
-
-        const promise = new mumuki.bridge.Laboratory()
-          .runTests(solution)
-          .then((results) => {
-            if (promise !== this.serverPromise) return;
-
-            this._onRemoteExecutionStop(results)
-          })
-          .catch(() => {
-            mumuki.kids.showResult({status: 'aborted'})
-          });
-        this.serverPromise = promise;
-
-        controller.start({
-          initialState: this.initialState,
-          code: {
-            main: code,
-            library: "",
-            teacher: teacherCode
-          }
-        }, {
-          onResult: (state, fullState) => {
-            const region = this._getLastRegion(fullState);
-            if (region) this._highlight(region);
-
+      Polymer({
+          is: "kids-submit-button",
+          listeners: {
+              "pl-run-request": "_onRunRequest",
+              "pl-stop": "_onStop",
+              "pl-reset-state": "_onResetState"
           },
-          onCompilationError: (error) => {
-            const {region} = error.on;
-            if (region) this._showError(region, error);
+          properties: {
+              serverPromise: Object,
+              serverResponse: Object,
+              isWaiting: {
+                  type: Boolean,
+                  value: false
+              }
+          },
+          _onButtonClick: function() {
+              this.fire("pl-run-request", {
+              });
+          },
+          _onRunRequest: function (event) {
+              const editor = this._getEditor();
+              const code = editor.getStudentCode();
+              const teacherCode = editor.getTeacherCode() || ""; //esto supongo que lo usaremos en algun momento
+
+              const solution = {};
+              solution['utf8'] = "✓";
+              solution['solution[content]'] = code;
+
+
+              const promise = new mumuki.bridge.Laboratory()
+                  .runLocalTests(solution).
+              done(function (data) {
+                      mumuki.kids.showResult(data);
+                      $(".mu-kids-character img").attr("src","https://i.imgur.com/E51jddY.png");
+
+                  }).fail(function () {
+                 //algo
+              }).always(function () {
+                //algo
+              });
+          },
+
+          _onStop: function (event) {
+              //aca deberia estar el codigo del evento on-stop
+          },
+
+          _getEditor: function () {
+              return $("mu-prolog-custom-editor")[0];
           }
-        }, executionSpeed);
-      },
-
-      _onStop: function (event) {
-        const reason = event.detail;
-
-        if (reason === "end") {
-          this._onLocalExecutionStop();
-          this._toggleInitialState();
-          this.$.runner.isDirty = true;
-        }
-        else this.serverPromise = undefined;
-      },
-
-      _onLocalExecutionStop: function () {
-        if (!this.serverResponse) this.isWaiting = true;
-        else this._onExecutionStop(this.serverResponse);
-      },
-
-      _onRemoteExecutionStop: function (serverResponse) {
-        this.serverResponse = serverResponse;
-
-        if (!this.$.runner.isRunning) this._onExecutionStop(serverResponse);
-      },
-
-      _onExecutionStop: function (data) {
-        this._cleanState();
-        mumuki.kids.showResult(data);
-      },
-
-      _highlight: function (region) {
-        this._getBlockly().highlightBlock(region);
-      },
-
-      _showError: function (region, error) {
-        this._getBlockly().showBlockError(region, error.message);
-      },
-
-      _cleanState: function () {
-        this.serverPromise = undefined;
-        this.serverResponse = undefined;
-        this.isWaiting = false;
-      },
-
-      _cleanErrors: function (finalBoard) {
-        this._getBlockly().workspace.removeBlockErrors();
-      },
-
-      _getLastRegion: function (context = {}) {
-        const {regionStack} = context;
-        return regionStack && regionStack.filter(it => it).slice(-1)[0];
-      },
-
-      _getBlockly: function () {
-        return this._getEditor().getBlockly();
-      },
-
-      _getEditor: function () {
-        return $("mu-prolog-custom-editor")[0];
-      },
-
-      _getSubmitCss: function (isWaiting) {
-        return isWaiting ? "hidden" : "visible";
-      },
-
-      _getSpinnerCss: function (isWaiting) {
-        return isWaiting ? "visible" : "hidden";
-      },
-
-      _onResetState: function () {
-        this._getBlockly().workspace.removeBlockErrors();
-        this._toggleInitialState();
-        mumuki.kids.restart();
-      },
-
-      _toggleInitialState: function () {
-        $("#mu-initial-state-text").toggle();
-        $("#mu-actual-state-text").toggle();
-      }
-    });
+      });
   </script>
 </dom-module>
 
