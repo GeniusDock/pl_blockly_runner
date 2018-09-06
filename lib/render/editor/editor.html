@@ -40,10 +40,45 @@
             }
           };
         };
+        const setBlocklyColors = () => {
+          Blockly.HSV_SATURATION = 0.64;
+          Blockly.HSV_VALUE = 1;
+          Blockly.MUMUKI_COLORS = {
+            pink: "#FF5C82",
+            blue: "#5CBEFF",
+            yellow: "#FFC95C"
+          };
+          // reserved
+          Blockly.CUSTOM_COLORS.program = Blockly.MUMUKI_COLORS.pink;
+          Blockly.CUSTOM_COLORS.interactiveProgram = Blockly.MUMUKI_COLORS.pink;
+          Blockly.CUSTOM_COLORS.interactiveBinding = Blockly.MUMUKI_COLORS.pink;
+          Blockly.CUSTOM_COLORS.procedure = Blockly.MUMUKI_COLORS.pink;
+          Blockly.CUSTOM_COLORS.function = Blockly.MUMUKI_COLORS.pink;
+          Blockly.CUSTOM_COLORS.complete = Blockly.MUMUKI_COLORS.pink;
+          // commands
+          Blockly.CUSTOM_COLORS.controlStructure = Blockly.MUMUKI_COLORS.yellow;
+          Blockly.CUSTOM_COLORS.primitiveCommand = Blockly.MUMUKI_COLORS.yellow;
+          Blockly.CUSTOM_COLORS.primitiveProcedure = Blockly.MUMUKI_COLORS.yellow;
+          Blockly.CUSTOM_COLORS.procedure_call = Blockly.MUMUKI_COLORS.yellow;
+          Blockly.CUSTOM_COLORS.assignation = Blockly.MUMUKI_COLORS.yellow;
+          // expressions
+          Blockly.Msg.MATH_HUE = Blockly.MUMUKI_COLORS.blue;
+          Blockly.CUSTOM_COLORS.literalExpression = Blockly.MUMUKI_COLORS.blue;
+          Blockly.CUSTOM_COLORS.primitiveExpression = Blockly.MUMUKI_COLORS.blue;
+          Blockly.CUSTOM_COLORS.operator = Blockly.MUMUKI_COLORS.blue;
+          Blockly.CUSTOM_COLORS.variable = Blockly.MUMUKI_COLORS.blue;
+          Blockly.CUSTOM_COLORS.parameter = Blockly.MUMUKI_COLORS.blue;
+          Blockly.CUSTOM_COLORS.primitiveFunction = Blockly.MUMUKI_COLORS.blue;
+          Blockly.CUSTOM_COLORS.function_call = Blockly.MUMUKI_COLORS.blue;
+          setTimeout(() => {
+            this.getBlockly().testColors(Blockly.CUSTOM_COLORS);
+          }, 1000);
+      };
 
         const setBlocklyCustomSettings = () => {
           if (typeof Blockly === 'undefined' || !Blockly.CUSTOM_COLORS) return postpone(setBlocklyCustomSettings);
           setBlocklySounds();
+          setBlocklyColors();
         };
 
         const updateFields = () => {
@@ -143,6 +178,10 @@
         return this
           .getBlockly()
           .generateCode();
+      },
+
+      getStudentXml: function () {
+        return $("#mu-custom-editor-value")[0].value || "";
       },
 
       getTeacherCode: function () {
@@ -356,14 +395,15 @@
           },
           _onRunRequest: function (event) {
               const editor = this._getEditor();
+              const xml = editor.getStudentXml();
               const code = editor.getStudentCode();
               const teacherCode = editor.getTeacherCode() || ""; //esto supongo que lo usaremos en algun momento
 
               const solution = {};
               solution['utf8'] = "✓";
-              solution['solution[content]'] = code;
+              solution['solution[content]'] = xml;
 
-
+              debugger;
               const promise = new mumuki.bridge.Laboratory()
                   .runLocalTests(solution).
               done(function (data) {
