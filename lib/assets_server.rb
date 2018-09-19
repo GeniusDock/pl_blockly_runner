@@ -28,6 +28,25 @@ class Mumukit::Server::App < Sinatra::Base
     end
   end
 
+  def self.get_prolog_blocly()
+    path = 'htmls/vendor/polymer-micro.html'
+
+    get "/prologBlockly" do
+      file = Tempfile.new('foo')
+      File.open(Prolog::Blockly.assets_path_for(path),"r") do |f|
+        file.write f.read
+      end
+      file.write "\n"
+
+      File.open(Prolog::Blockly.assets_path_for('htmls/pl-element-blockly.html'),"r") do |f|
+        file.write f.read
+      end
+
+      send_file file.path, type: 'text/html'
+
+    end
+  end
+
   def self.get_board_asset(route, path, type)
     get_asset route, Prolog::Board.assets_path_for(path), type
   end
@@ -50,4 +69,7 @@ class Mumukit::Server::App < Sinatra::Base
   get_local_asset 'editor/editor.js', 'lib/render/editor/editor.js', 'application/javascript'
   get_local_asset 'editor/editor.css', 'lib/render/editor/editor.css', 'text/css'
   get_local_asset 'editor/editor.html', 'lib/render/editor/editor.html', 'text/html'
+
+  get_prolog_blocly
+
 end

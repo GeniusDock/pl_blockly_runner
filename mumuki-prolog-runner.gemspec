@@ -21,6 +21,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'prolog-blockly', '1.0.12'
   spec.add_dependency 'gobstones-board', '~>1.16'
   spec.add_dependency 'sinatra-cross_origin', '~> 0.4'
+  spec.add_dependency 'watir','~> 6.14.0'
+  spec.add_dependency 'webdrivers', '~> 3.0'
 
 
   spec.add_development_dependency 'bundler', '~> 1.7'
