@@ -1,5 +1,9 @@
+require 'xml_content_hook'
+
 class PrologQueryHook < Mumukit::Templates::FileHook
   isolated true
+
+  include XmlContentHook
 
   def command_line(filename)
     "swipl -f #{filename} --quiet -t main 2>&1"

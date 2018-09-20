@@ -1,5 +1,10 @@
+require 'xml_content_hook'
+
+
 class PrologTestHook < Mumukit::Templates::FileHook
   isolated true
+
+  include XmlContentHook
 
   def post_process_file(file, result, status)
     if /ERROR: #{file.path}:.*: Syntax error: .*/ =~ result
@@ -20,10 +25,11 @@ class PrologTestHook < Mumukit::Templates::FileHook
   end
 
   def compile_file_content(request)
+    code = compile_content request.content
     <<EOF
 :- begin_tests(mumuki_submission_test, []).
 #{request.test}
-#{request.content}
+#{code}
 #{request.extra}
 :- end_tests(mumuki_submission_test).
 EOF

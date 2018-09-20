@@ -16,6 +16,21 @@ describe 'runner' do
     expect(response).to include("name" => "prolog")
   end
 
+  it 'canReceiveAnXmlAsContent' do
+    xml = '<xml xmlns="http://www.w3.org/1999/xhtml"><variables></variables><block type="fact1" id="$AFm-{7a=bh[-ie%O{_Q" x="137" y="51"><field name="Nombre">personajeDeFiccion</field><value name="PrimerIndividuo"><block type="IndividuoSelector" id="4L%CaboKRNPJV+abT+0a"><field name="Individuo">frodo</field></block></value><next><block type="fact1" id=",p?=^ee-]E{ay~G=HyFa"><field name="Nombre">personajeDeFiccion</field><value name="PrimerIndividuo"><block type="IndividuoSelector" id="fSPcLqezNStm^qI!D9*6"><field name="Individuo">harryPotter</field></block></value></block></next></block></xml>'
+
+    response = bridge.run_tests!(test: 'test(ok) :- personajeDeFiccion(X), assertion(frodo == X).',
+                                 extra: '',
+                                 content: xml,
+                                 expectations: [])
+
+    expect(response).to include(status: :passed,
+                           expectation_results:[],
+                           test_results: [],
+                           feedback: '',
+                           response_type: :unstructured)
+  end
+
   it 'answers a valid hash when submission is ok' do
     response = bridge.run_tests!(test: 'test(ok) :- foo(X), assertion(1 == X).',
                                  extra: '',
@@ -43,6 +58,8 @@ describe 'runner' do
                            feedback: '',
                            response_type: :unstructured)
   end
+
+
 
   it 'answers a valid hash when submission is not ok' do
     response = bridge.
