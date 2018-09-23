@@ -78,3 +78,17 @@
     width: 24px;
     height: 24px;
   }
+
+.mu-kids-exercise .mu-kids-character .mu-kids-character-speech-bubble div.mu-kids-character-speech-bubble-failed{
+  overflow: unset;
+}
+
+.mu-kids-result-box{
+  align-self: baseline;
+}
+
+.mu-kids-character-speech-bubble{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
