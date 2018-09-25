@@ -398,27 +398,41 @@
               const xml = editor.getStudentXml();
               const code = editor.getStudentCode();
               const teacherCode = editor.getTeacherCode() || ""; //esto supongo que lo usaremos en algun momento
-
+              var resultsBox = $('.mu-kids-result-box');
               const solution = {};
               solution['utf8'] = "✓";
               solution['solution[content]'] = xml;
 
-              debugger;
               const promise = new mumuki.bridge.Laboratory()
                   .runLocalTests(solution).
               done(function (data) {
                       mumuki.kids.showResult(data);
                       $(".mu-kids-character img").attr("src","https://i.imgur.com/E51jddY.png");
 
+                      if(data.status === 'failed'){
+                          $(".mu-kids-overlay").css("display","none");
+                          resultsBox.html(data.expectations_html);
+                      }
                   }).fail(function () {
-                 //algo
-              }).always(function () {
+                 mumuki.kids.showResult({status: 'aborted'});
+                      $(".mu-kids-character img").attr("src","https://i.imgur.com/E51jddY.png");
+                      $(".mu-kids-overlay").css("display","none");
+                  }).always(function () {
                 //algo
               });
           },
-
+          _onLocalExecutionStop: function () {
+              if (!this.serverResponse) this.isWaiting = true;
+              else this._onExecutionStop(this.serverResponse);
+          },
           _onStop: function (event) {
-              //aca deberia estar el codigo del evento on-stop
+              const reason = event.detail;
+              if (reason === "end") {
+                  this._onLocalExecutionStop();
+                  this._toggleInitialState();
+                  this.$.runner.isDirty = true;
+              }
+              else this.serverPromise = undefined;
           },
 
           _getEditor: function () {
