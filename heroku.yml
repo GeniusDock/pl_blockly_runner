@@ -1,0 +1,5 @@
+build:
+  languages:
+    - ruby
+run:
+  web: RACK_ENV=development bundle exec rackup -p 4567
