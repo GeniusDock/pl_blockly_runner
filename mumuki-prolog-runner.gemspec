@@ -3,6 +3,12 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'version'
 
+begin
+  require 'minitest/autorun'
+rescue LoadError => e
+  raise e unless ENV['RAILS_ENV'] == "production"
+end
+
 Gem::Specification.new do |spec|
   spec.name          = 'pl_blockly_runner'
   spec.version       = PrologVersionHook::VERSION
