@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'mumukit', '~> 2.17'
-  spec.add_dependency 'prolog-blockly', '1.0.13'
+  spec.add_dependency 'prolog-blockly', '1.0.14'
   spec.add_dependency 'gobstones-board', '~>1.16'
   spec.add_dependency 'sinatra-cross_origin', '~> 0.4'
   spec.add_dependency 'watir','~> 6.14.0'
@@ -31,6 +31,3 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'codeclimate-test-reporter'
   spec.add_development_dependency 'mumukit-bridge', '~> 1.3'
 end
-
-
-
