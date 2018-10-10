@@ -1,4 +1,4 @@
 require 'prolog/blockly'
 
-module Prolog
+module PrologBlockly
 end

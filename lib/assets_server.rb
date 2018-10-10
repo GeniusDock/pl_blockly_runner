@@ -1,7 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/cross_origin'
 
-module Prolog
+module PrologBlockly
   module Board
     class Engine < ::Rails::Engine
     end if defined? ::Rails::Engine
@@ -65,7 +65,7 @@ class Mumukit::Server::App < Sinatra::Base
   get_editor_asset 'polymer-micro.html', 'htmls/vendor/polymer-micro.html', 'text/html'
 
   get_editor_asset 'editor/pl-element-blockly.html', 'htmls/pl-element-blockly.html', 'text/html'
-  
+
   get_local_asset 'editor/editor.js', 'lib/render/editor/editor.js', 'application/javascript'
   get_local_asset 'editor/editor.css', 'lib/render/editor/editor.css', 'text/css'
   get_local_asset 'editor/editor.html', 'lib/render/editor/editor.html', 'text/html'

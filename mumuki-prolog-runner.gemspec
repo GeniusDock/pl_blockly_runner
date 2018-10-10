@@ -5,7 +5,7 @@ require 'version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'pl_blockly_runner'
-  spec.version       = PrologVersionHook::VERSION
+  spec.version       = PrologBlocklyVersionHook::VERSION
   spec.authors       = ['Agustin Pina']
   spec.email         = ['agus@mumuki.org']
   spec.summary       = 'Blockly Prolog Runner for Mumuki'

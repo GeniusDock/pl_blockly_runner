@@ -1,7 +1,7 @@
 require 'xml_content_hook'
 
 
-class PrologTestHook < Mumukit::Templates::FileHook
+class PrologBlocklyTestHook < Mumukit::Templates::FileHook
   isolated true
 
   include XmlContentHook

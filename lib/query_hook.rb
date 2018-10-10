@@ -1,6 +1,6 @@
 require 'xml_content_hook'
 
-class PrologQueryHook < Mumukit::Templates::FileHook
+class PrologBlocklyQueryHook < Mumukit::Templates::FileHook
   isolated true
 
   include XmlContentHook
@@ -74,10 +74,3 @@ PROLOG
   end
 
 end
-
-
-
-
-
-
-

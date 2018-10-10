@@ -1,7 +1,7 @@
 require_relative 'spec_helper'
 
-describe PrologTestHook do
-  let(:runner) { PrologTestHook.new }
+describe PrologBlocklyTestHook do
+  let(:runner) { PrologBlocklyTestHook.new }
   let(:file) { OpenStruct.new(path: '/tmp/foo.pl') }
 
   describe '#validate_compile_errors' do

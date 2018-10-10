@@ -1,4 +1,4 @@
-class PrologFeedbackHook < Mumukit::Hook
+class PrologBlocklyFeedbackHook < Mumukit::Hook
   def run!(request, results)
     content = request.content
     test_results = results.test_results[0]

@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-describe PrologExpectationsHook do
+describe PrologBlocklyExpectationsHook do
   def req(expectations, content)
     struct expectations: expectations, content: content
   end
@@ -9,7 +9,7 @@ describe PrologExpectationsHook do
     runner.run!(runner.compile(request))
   end
 
-  let(:runner) { PrologExpectationsHook.new }
+  let(:runner) { PrologBlocklyExpectationsHook.new }
   let(:result) { compile_and_run(req(expectations, code)) }
 
   describe 'UsesCut' do

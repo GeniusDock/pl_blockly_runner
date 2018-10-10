@@ -1,4 +1,4 @@
-class PrologMetadataHook < Mumukit::Hook
+class PrologBlocklyMetadataHook < Mumukit::Hook
   def metadata
     {language: {
         name: 'prolog-blockly',

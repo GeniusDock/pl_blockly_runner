@@ -1,6 +1,6 @@
 <link href="./pl-element-blockly.html" rel="import"/>
 
-<dom-module id="mu-prolog-blockly-custom-editor">
+<dom-module id="mu-prologBlockly-custom-editor">
 
   <template>
     <pl-element-blockly read-only="{{readOnly}}" id="blocklyElement"
@@ -15,7 +15,7 @@
     }
 
     Polymer({
-      is: 'mu-prolog-blockly-custom-editor',
+      is: 'mu-prologBlockly-custom-editor',
       properties: {
         readOnly: {
           type: Boolean,
@@ -320,7 +320,7 @@
       },
 
       _getEditor: function () {
-          return $("mu-prolog-blockly-custom-editor")[0];
+          return $("mu-prologBlockly-custom-editor")[0];
       }
     });
   </script>
@@ -436,7 +436,7 @@
           },
 
           _getEditor: function () {
-              return $("mu-prolog-blockly-custom-editor")[0];
+              return $("mu-prologBlockly-custom-editor")[0];
           }
       });
   </script>
@@ -459,7 +459,7 @@
       },
       _setToolbox: function () {
         $.get(this.toolboxUrl, function (toolboxXml) {
-          const editor = $("mu-prolog-blockly-custom-editor")[0];
+          const editor = $("mu-prologBlockly-custom-editor")[0];
           const blockly = editor.getBlockly();
           blockly.setDefaultToolbox(toolboxXml);
           editor.setTeacherActions(blockly);

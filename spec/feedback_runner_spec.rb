@@ -4,13 +4,13 @@ def req(content, test='test(foo) :- true.')
   struct content: content, test: test
 end
 
-describe PrologFeedbackHook do
+describe PrologBlocklyFeedbackHook do
 
   before { I18n.locale = :es }
 
   let(:server) { PrologTestHook.new }
   let!(:test_results) { server.run!(server.compile(request)) }
-  let(:feedback) { PrologFeedbackHook.new.run!(request, OpenStruct.new(test_results: test_results)) }
+  let(:feedback) { PrologBlocklyFeedbackHook.new.run!(request, OpenStruct.new(test_results: test_results)) }
 
 
   context 'when wrong distinct operator' do

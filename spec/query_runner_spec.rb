@@ -2,9 +2,9 @@ require_relative 'spec_helper'
 require 'ostruct'
 require_relative '../lib/query_hook'
 
-describe PrologQueryHook do
+describe PrologBlocklyQueryHook do
 
-  let(:hook) { PrologQueryHook.new }
+  let(:hook) { PrologBlocklyQueryHook.new }
   let(:file) { hook.compile(request) }
   let(:result) { hook.run!(file) }
 
