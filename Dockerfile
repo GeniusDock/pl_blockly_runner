@@ -120,15 +120,13 @@ RUN mkdir -p "$GEM_HOME" && chmod 777 "$GEM_HOME"
 
 ENV RACK_ENV production
 
-EXPOSE 2727
 COPY . /app
 WORKDIR /app
 
 RUN apk add --update ruby-dev build-base \
-      libxml2-dev libxslt-dev pcre-dev libffi-dev \
-      mariadb-dev postgresql-dev
+      libxml2-dev libxslt-dev pcre-dev libffi-dev
 RUN apk add libgcrypt-dev
 RUN bundle config build.nokogiri --use-system-libraries
 
 RUN bundle install
-CMD ["bundle", "exec", "rackup", "-p", "2727"]
+CMD  bundle exec rackup -p $PORT
