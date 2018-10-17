@@ -17,13 +17,14 @@ RUN export PATH=$PATH:/geckodriver
 
 ENV RACK_ENV production
 
-COPY . /app
+RUN mkdir -p /app
 WORKDIR /app
+COPY . /app
+
 
 RUN bundle config build.nokogiri --use-system-libraries
 
 RUN bundle install
+EXPOSE 3001
 
-CMD  bundle exec rackup -p 3001
-
-#ENTRYPOINT ["/app/start-runner"]
+ENTRYPOINT ["/app/start-runner"]
