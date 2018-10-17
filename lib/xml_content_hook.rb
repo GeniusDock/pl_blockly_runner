@@ -6,10 +6,11 @@ module XmlContentHook
     attr_accessor :browser
 
     def compile_content(content)
+      Selenium::WebDriver::Firefox::Binary.path='/geckodriver'
 
     if(content.start_with? "<xml")
         if !browser
-            browser = Watir::Browser.new :chrome, headless: true
+            browser = Watir::Browser.new :firefox, headless: true
             browser.goto 'http://localhost:4567/prologBlockly'
         end
 
