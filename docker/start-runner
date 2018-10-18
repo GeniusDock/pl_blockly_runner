@@ -1,16 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 echo "[GeniusDock::Prolog-Blockly] Starting prolog-blockly..."
 
 cd /app
 
-CORES=$(nproc)
-
 echo "[GeniusDock::Prolog-Blockly] Using docker client $(docker -v)"
 echo "[GeniusDock::Prolog-Blockly] Checking docker connection...."
 export DOCKER_HOST='tcp://localhost:2375'
 docker version
 
-echo "[GeniusDock::Prolog-Blockly] Server is listening on all interfaces (0.0.0.0). Concurrency level is $CORES"
-bundle exec puma -t $CORES:$(expr 2 \* 3  \* 4 \* $CORES) -p 3001
+echo "[GeniusDock::Prolog-Blockly] Downloading mumuki plunit worker..."
+docker pull mumuki/mumuki-plunit-worker:2.0
+
+echo "[GeniusDock::Prolog-Blockly] Server is listening on all interfaces (0.0.0.0)."
+bundle exec rackup -p 3001
