@@ -6,6 +6,7 @@ module XmlContentHook
     attr_accessor :browser
 
     def compile_content(content)
+      Selenium::WebDriver::Chrome.driver_path='/usr/local/bin/chromedriver'
 
     if(content.start_with? "<xml")
         if !browser
