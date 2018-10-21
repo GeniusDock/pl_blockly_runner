@@ -53,6 +53,6 @@ COPY docker/start-runner /usr/local/bin/start-runner
 RUN bundle config build.nokogiri --use-system-libraries
 
 RUN bundle install
-EXPOSE 4567
+EXPOSE 3001
 
 ENTRYPOINT ["/usr/local/bin/start-runner"]
