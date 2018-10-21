@@ -5,13 +5,27 @@ module XmlContentHook
 
     attr_accessor :browser
 
+  def new_browser
+        options = Selenium::WebDriver::Chrome::Options.new
+
+	options.add_argument "--no-sandbox"
+        options.add_argument "window-size=1200x600"
+        options.add_argument "--headless"
+        options.add_argument "--disable-gpu"
+	options.add_argument "--disable-dev-shm-usage"
+        # make the browser
+        Watir::Browser.new :chrome, options: options
+    end
+
     def compile_content(content)
-      Selenium::WebDriver::Chrome.driver_path='/usr/local/bin/chromedriver'
+	
 
     if(content.start_with? "<xml")
         if !browser
-            browser = Watir::Browser.new :chrome, headless: true
-            browser.goto 'http://localhost:4567/prologBlockly'
+		
+            browser = new_browser;
+		
+            browser.goto 'http://localhost:3001/prologBlockly'
         end
 
         code = browser.execute_script("
