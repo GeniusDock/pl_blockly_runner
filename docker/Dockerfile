@@ -22,6 +22,10 @@ RUN apt-get purge -y locales && \
     apt-get install unzip -y --force-yes && \
     rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update
+RUN apt -y install libgconf2-4
+
+RUN apt-get  install -y  xvfb
 RUN wget -qO- https://get.docker.com/ | sh
 
 # Install Chrome for Selenium
@@ -29,9 +33,12 @@ RUN curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.d
 RUN dpkg -i /chrome.deb || apt-get install -yf
 RUN rm /chrome.deb
 
-# Install chromedriver for Selenium
-RUN curl https://chromedriver.storage.googleapis.com/2.31/chromedriver_linux64.zip -o /usr/local/bin/chromedriver
-RUN chmod +x /usr/local/bin/chromedriver
+RUN wget -N http://chromedriver.storage.googleapis.com/2.42/chromedriver_linux64.zip
+RUN unzip chromedriver_linux64.zip
+RUN chmod +x chromedriver
+RUN mv -f chromedriver /usr/local/share/chromedriver
+RUN ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+RUN ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
 
 
 ENV RACK_ENV production
@@ -46,6 +53,6 @@ COPY docker/start-runner /usr/local/bin/start-runner
 RUN bundle config build.nokogiri --use-system-libraries
 
 RUN bundle install
-EXPOSE 3001
+EXPOSE 4567
 
 ENTRYPOINT ["/usr/local/bin/start-runner"]
