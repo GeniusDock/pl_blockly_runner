@@ -314,7 +314,8 @@
 
       _onButtonClick: function () {
         const blockly = this._getBlockly();
-        blockly.workspace.clear();
+          blockly.workspaceXml = blockly.initialXml;
+          blockly.scrollToBlock();
       },
       _getBlockly: function () {
           return this._getEditor().getBlockly();
