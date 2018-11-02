@@ -411,7 +411,7 @@
                       mumuki.kids.showResult(data);
                       $(".mu-kids-character img").attr("src","https://i.imgur.com/E51jddY.png");
 
-                      if(data.status === 'failed'){
+                      if(data.status === 'failed' || data.status === 'errored'){
                           $(".mu-kids-overlay").css("display","none");
                           resultsBox.html(data.expectations_html);
                       }
