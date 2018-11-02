@@ -408,6 +408,7 @@
               const promise = new mumuki.bridge.Laboratory()
                   .runLocalTests(solution).
               done(function (data) {
+                      $(".mu-kids-character-speech-bubble").attr("class","mu-kids-character-speech-bubble no-tabs");
                       mumuki.kids.showResult(data);
                       $(".mu-kids-character img").attr("src","https://i.imgur.com/E51jddY.png");
 
