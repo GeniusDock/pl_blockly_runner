@@ -1,6 +1,4 @@
-
-<xml id="toolbox" style="display: none">
-  <category name="Verdades">
+ <category name="Verdades">
     <block type="fact1"></block>
     <block type="fact2"></block>
     <block type="fact3"></block>
@@ -21,4 +19,3 @@
   <category name="Comandos">
     <block type="not"></block>
   </category>
-</xml>
