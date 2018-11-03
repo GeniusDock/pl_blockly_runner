@@ -1,0 +1,20 @@
+<xml id="toolbox" style="display: none">
+  <category name="Verdades">
+    <block type="fact1"></block>
+    <block type="fact2"></block>
+    <block type="fact3"></block>
+  </category>
+  <category name="Comandos">
+    <block type="forall"></block>
+    <block type="not"></block>
+  </category>
+  <category name="Individuos">
+    <block type="IndividuoSelector"></block>
+  </category>
+  <category name="Variables">
+    <block type="VariableSelector"></block>
+  </category>
+  <category name="Condiciones">
+    <block type="procedures_defnoreturn"></block>
+  </category>
+</xml>

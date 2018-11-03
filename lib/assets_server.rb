@@ -69,6 +69,10 @@ class Mumukit::Server::App < Sinatra::Base
   get_local_asset 'editor/editor.js', 'lib/render/editor/editor.js', 'application/javascript'
   get_local_asset 'editor/editor.css', 'lib/render/editor/editor.css', 'text/css'
   get_local_asset 'editor/editor.html', 'lib/render/editor/editor.html', 'text/html'
+  get_local_asset 'editor/soloVerdadesDe1Parametro.xml', 'lib/render/editor/soloVerdadesDe1Parametro.xml', 'text/xml'
+  get_local_asset 'editor/soloVerdades.xml', 'lib/render/editor/soloVerdades.xml', 'text/xml'
+  get_local_asset 'editor/sinComandos.xml', 'lib/render/editor/sinComandos.xml', 'text/xml'
+  get_local_asset 'editor/completo.xml', 'lib/render/editor/completo.xml', 'text/xml'
 
   get_prolog_blocly
 

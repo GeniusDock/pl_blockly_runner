@@ -1,0 +1,10 @@
+<xml id="toolbox" style="display: none">
+  <category name="Verdades">
+    <block type="fact1"></block>
+    <block type="fact2"></block>
+    <block type="fact3"></block>
+  </category>
+  <category name="Individuos">
+    <block type="IndividuoSelector"></block>
+  </category>
+</xml>
