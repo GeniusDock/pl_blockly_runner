@@ -295,7 +295,7 @@
               <iron-icon id="icon" class="style-scope paper-fab x-scope iron-icon-0">
                 <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
                   <g class="style-scope iron-icon">
-                    <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" class="style-scope iron-icon">
+                    <path id="arrow-icon" d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" class="style-scope iron-icon">
                     </path>
                   </g>
                 </svg>
@@ -389,40 +389,59 @@
               isWaiting: {
                   type: Boolean,
                   value: false
-              }
+              },
+              failedState: false
           },
           _onButtonClick: function() {
               this.fire("pl-run-request", {
               });
           },
           _onRunRequest: function (event) {
-              const editor = this._getEditor();
-              const xml = editor.getStudentXml();
-              const code = editor.getStudentCode();
-              const teacherCode = editor.getTeacherCode() || ""; //esto supongo que lo usaremos en algun momento
-              var resultsBox = $('.mu-kids-result-box');
-              const solution = {};
-              solution['utf8'] = "✓";
-              solution['solution[content]'] = xml;
+              var goToFailedState = function(){
+                  $("#plPlayButton").find("path").attr("d","M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z");
+                  this.properties.failedState = true;
+              }.bind(this);
+              var goToDefaultState = function(){
+                  $("#plPlayButton").find("path").attr("d","M8 5v14l11-7z");
+                  mumuki.kids.restart();
+                  $(".mu-kids-character img").attr("src","https://i.imgur.com/E51jddY.png");
+                  this.properties.failedState = false;
+              }.bind(this);
 
-              const promise = new mumuki.bridge.Laboratory()
-                  .runLocalTests(solution).
-              done(function (data) {
-                      $(".mu-kids-character-speech-bubble").attr("class","mu-kids-character-speech-bubble no-tabs");
-                      mumuki.kids.showResult(data);
-                      $(".mu-kids-character img").attr("src","https://i.imgur.com/E51jddY.png");
+              if(!this.properties.failedState){
+                const editor = this._getEditor();
+                const xml = editor.getStudentXml();
+                const code = editor.getStudentCode();
+                const teacherCode = editor.getTeacherCode() || ""; //esto supongo que lo usaremos en algun momento
+                var resultsBox = $('.mu-kids-result-box');
+                const solution = {};
+                solution['utf8'] = "✓";
+                solution['solution[content]'] = xml;
 
-                      if(data.status === 'failed' || data.status === 'errored'){
-                          $(".mu-kids-overlay").css("display","none");
-                          resultsBox.html(data.expectations_html);
-                      }
-                  }).fail(function () {
-                 mumuki.kids.showResult({status: 'aborted'});
-                      $(".mu-kids-character img").attr("src","https://i.imgur.com/E51jddY.png");
-                      $(".mu-kids-overlay").css("display","none");
-                  }).always(function () {
-                //algo
-              });
+                const promise = new mumuki.bridge.Laboratory()
+                    .runLocalTests(solution).
+                done(function (data) {
+                        $(".mu-kids-character-speech-bubble").attr("class","mu-kids-character-speech-bubble no-tabs");
+                        mumuki.kids.showResult(data);
+                        $(".mu-kids-character img").attr("src","https://i.imgur.com/E51jddY.png");
+
+                        if(data.status === 'failed' || data.status === 'errored'){
+                            $(".mu-kids-overlay").css("display","none");
+                            resultsBox.html(data.expectations_html);
+                            goToFailedState();
+                        }
+                    }).fail(function () {
+                   mumuki.kids.showResult({status: 'aborted'});
+                        $(".mu-kids-character img").attr("src","https://i.imgur.com/E51jddY.png");
+                        $(".mu-kids-overlay").css("display","none");
+                        goToFailedState();
+                    }).always(function () {
+                  //algo
+                });
+              }
+              else{
+                  goToDefaultState();
+              }
           },
           _onLocalExecutionStop: function () {
               if (!this.serverResponse) this.isWaiting = true;
