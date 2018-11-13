@@ -72,6 +72,7 @@ class Mumukit::Server::App < Sinatra::Base
   get_local_asset 'editor/soloVerdadesDe1Parametro.xml', 'lib/render/editor/soloVerdadesDe1Parametro.xml', 'text/plain'
   get_local_asset 'editor/soloVerdades.xml', 'lib/render/editor/soloVerdades.xml', 'text/plain'
   get_local_asset 'editor/sinComandos.xml', 'lib/render/editor/sinComandos.xml', 'text/plain'
+  get_local_asset 'editor/sinForAll.xml', 'lib/render/editor/sinForAll.xml', 'text/plain'
   get_local_asset 'editor/completo.xml', 'lib/render/editor/completo.xml', 'text/plain'
 
   get_prolog_blocly
