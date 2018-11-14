@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'mumukit', '~> 2.17'
-  spec.add_dependency 'prolog-blockly', '1.0.16'
+  spec.add_dependency 'prolog-blockly', '1.0.17'
   spec.add_dependency 'sinatra-cross_origin', '~> 0.4'
   spec.add_dependency 'watir','~> 6.14.0'
   spec.add_dependency 'webdrivers', '~> 3.0'

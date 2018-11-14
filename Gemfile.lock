@@ -3,7 +3,7 @@ PATH
   specs:
     pl_blockly_runner (1.2.0)
       mumukit (~> 2.17)
-      prolog-blockly (= 1.0.16)
+      prolog-blockly (= 1.0.17)
       sinatra-cross_origin (~> 0.4)
       watir (~> 6.14.0)
       webdrivers (~> 3.0)
@@ -94,7 +94,7 @@ GEM
     netrc (0.11.0)
     nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
-    prolog-blockly (1.0.16)
+    prolog-blockly (1.0.17)
     puma (3.12.0)
     rack (1.6.10)
     rack-protection (1.5.5)
